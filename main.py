@@ -5,7 +5,7 @@ import constants
 from xgboost import XGBRegressor
 
 # Load your trained linear regression model
-model = load('XGboost.joblib')  # Adjust filename as needed
+model = load('model/XGboost.joblib')  # Adjust filename as needed
 
 
 # Function to predict based on user inputs
@@ -76,20 +76,34 @@ if engine_volume == 0.0:
 
 # Predict button
 if st.button('Predict Price'):
-    if user_type == 'Seller' and not all([brand, fuel_type, transmission, model_year, milage, accident, HP, engine_volume]):
+    if user_type == 'Seller' and not all([brand, fuel_type, transmission, model_year, milage, HP, engine_volume]):
         st.write('Sellers must fill all fields before predicting.')
     else:
         # Set default values for optional fields if empty
         if user_type == 'Buyer':
-            brand = brand or 'Audi'
-            fuel_type = fuel_type or 'Gasoline'
-            transmission = transmission or 'Automatic'
-            model_year = model_year or 2020
-            milage = milage or 15000
-            accident = accident or True
-            HP = HP or 250
-            engine_volume = engine_volume or 2.0
+            brand1 = brand or 'Toyota'
+            fuel_type1 = fuel_type or 'Gasoline'
+            transmission1 = transmission or 'Automatic'
+            model_year1 = model_year or 2010
+            milage1 = milage or 150
+            accident1 = accident or False
+            HP1 = HP or 100
+            engine_volume1 = engine_volume or 2.0
+            
+            brand2 = brand or 'Toyota'
+            fuel_type2 = fuel_type or 'Gasoline'
+            transmission2 = transmission or 'Automatic'
+            model_year2 = model_year or 2024
+            milage2 = milage or 150000
+            accident2 = accident or True
+            HP2 = HP or 350
+            engine_volume2 = engine_volume or 2.0
 
+            prediction1 = predict_price(brand1, fuel_type1, transmission1, model_year1, milage1, accident1, HP1, engine_volume1)
+            prediction2 = predict_price(brand2, fuel_type2, transmission2, model_year2, milage2, accident2, HP2, engine_volume2)
+
+            st.write(f'Predicted Price range: ${min(prediction1, prediction2)} - ${max(prediction1, prediction2)}')
         
-        prediction = predict_price(brand, fuel_type, transmission, model_year, milage, accident, HP, engine_volume)
-        st.write(f'Predicted Price: ${prediction}')
+        else:
+            prediction = predict_price(brand, fuel_type, transmission, model_year, milage, accident, HP, engine_volume)
+            st.write(f'Predicted Price: ${prediction}')
