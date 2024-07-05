@@ -105,6 +105,9 @@ if st.button('Predict Price'):
             prediction1 = predict_price(brand1, fuel_type1, transmission1, model_year1, milage1, accident1, HP1, engine_volume1)
             prediction2 = predict_price(brand2, fuel_type2, transmission2, model_year2, milage2, accident2, HP2, engine_volume2)
 
+            prediction1 = round_to_hundred(prediction1)
+            prediction2 = round_to_hundred(prediction2)
+            
             st.write(f'Predicted Price range: ${min(prediction1, prediction2)} - ${max(prediction1, prediction2)}')
         
         else:
