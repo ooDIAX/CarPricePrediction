@@ -4,6 +4,9 @@ from joblib import load
 import constants
 from xgboost import XGBRegressor
 
+def round_to_hundred(value):
+    return round(value // 100) * 100
+
 # Load your trained linear regression model
 model = load('model/XGboost.joblib')  # Adjust filename as needed
 
@@ -106,4 +109,4 @@ if st.button('Predict Price'):
         
         else:
             prediction = predict_price(brand, fuel_type, transmission, model_year, milage, accident, HP, engine_volume)
-            st.write(f'Predicted Price: ${prediction}')
+            st.write(f'Predicted Price: ${round_to_hundred(prediction)}')
